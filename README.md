@@ -51,7 +51,7 @@ Wait until all operators show `Succeeded` status before proceeding.
 After operators are ready, reapply the configuration to create custom resources:
 
 ```bash
-kubectl apply -f observability.yaml
+kubectl apply -f observability.yaml 
 ```
 
 ### Step 4: Verify Core Stack
@@ -74,10 +74,10 @@ Deploy the specialized dashboards for GPU and vLLM monitoring:
 
 ```bash
 # Deploy NVIDIA GPU monitoring dashboard
-kubectl apply -f nvidia-dashboard.yaml
+kubectl apply -f nvidia-dashboard.yaml -n observability-hub
 
 # Deploy vLLM performance dashboard
-kubectl apply -f vllm-dashboard.yaml
+kubectl apply -f vllm-dashboard.yaml -n observability-hub
 ```
 
 ### Step 6: Access Grafana
@@ -111,6 +111,24 @@ The NVIDIA dashboard requires:
 ### Custom Models
 
 To monitor custom vLLM models, update the PodMonitor selectors in the observability configuration to include your model names.
+
+### Generating data for the dashboards
+
+Execute the following curl command with different prompts to generate data for the dashboards.
+
+```bash
+curl -X 'POST' \
+  'https://llama-32-1b-instruct-model-namespace.apps.cluster-zn9gg.zn9gg.sandbox1967.opentlc.com/v1/completions' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "model": "llama-32-1b-instruct",
+  "prompt": [
+    "write an essay on power manufaturing in United states and Singapore?"
+  ],
+  "max_tokens": 1600
+}'
+```
 
 ## Troubleshooting
 
