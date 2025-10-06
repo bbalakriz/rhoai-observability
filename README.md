@@ -1,6 +1,11 @@
-# Observability Stack Deployment Instructions
+# Sample model deployment
 
-Use this along with the llm-guardrails repo deployment. 
+```bash
+oc apply -f serving-runtime.yaml
+oc apply -f inference-service.yaml
+```
+
+# Observability Stack Deployment Instructions
 
 This guide provides step-by-step instructions for deploying the complete observability stack at Scale, including Grafana dashboards for GPU monitoring and vLLM metrics.
 
