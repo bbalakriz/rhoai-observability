@@ -2163,32 +2163,37 @@ spec:
           },
           {
             "current": {
-              "text": "${NAMESPACE}",
-              "value": "${NAMESPACE}"
+              "text": "llama-32-1b-instruct",
+              "value": "llama-32-1b-instruct"
             },
-            "description": "",
-            "hide": 1,
-            "name": "namespace",
-            "options": [
-              {
-                "selected": true,
-                "text": "${NAMESPACE}",
-                "value": "${NAMESPACE}"
-              }
-            ],
-            "query": "${NAMESPACE}",
-            "type": "textbox"
+            "definition": "label_values(model_name)",
+            "name": "model_name",
+            "options": [],
+            "query": {
+              "qryType": 1,
+              "query": "label_values(model_name)",
+              "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "type": "query"
           },
           {
             "current": {
-              "text": "${MODEL_NAME}",
-              "value": "${MODEL_NAME}"
+              "text": "model-namespace",
+              "value": "model-namespace"
             },
-            "hide": 2,
-            "name": "model_name",
-            "query": "${MODEL_NAME}",
-            "skipUrlSync": true,
-            "type": "constant"
+            "definition": "label_values(vllm:gpu_cache_usage_perc, namespace)",
+            "name": "namespace",
+            "options": [],
+            "query": {
+              "qryType": 5,
+              "query": "label_values(vllm:gpu_cache_usage_perc, namespace)",
+              "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "type": "query"
           }
         ]
       },
