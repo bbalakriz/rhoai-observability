@@ -16,7 +16,7 @@ This guide provides step-by-step instructions for deploying the complete observa
 
 - OpenShift cluster with admin privileges
 - NVIDIA GPU Operator installed and running
-- `kubectl` or `oc` CLI tool configured
+- `oc` or `oc` CLI tool configured
 
 ## Deployment Steps
 
@@ -25,7 +25,7 @@ This guide provides step-by-step instructions for deploying the complete observa
 Deploy the main observability infrastructure including Grafana, Prometheus, Tempo, and OpenTelemetry collectors:
 
 ```bash
-kubectl apply -f observability.yaml
+oc apply -f observability.yaml
 ```
 
 **Expected behavior:**
@@ -39,12 +39,12 @@ Monitor the operator installation progress:
 
 ```bash
 # Check operator status
-kubectl get csv -n openshift-grafana-operator
-kubectl get csv -n openshift-opentelemetry-operator
-kubectl get csv -n openshift-tempo-operator
+oc get csv -n openshift-grafana-operator
+oc get csv -n openshift-opentelemetry-operator
+oc get csv -n openshift-tempo-operator
 
 # Check if CRDs are available
-kubectl get crd | grep -E "(grafana|opentelemetry|tempo)"
+oc get crd | grep -E "(grafana|opentelemetry|tempo)"
 ```
 
 Wait until all operators show `Succeeded` status before proceeding.
@@ -54,7 +54,7 @@ Wait until all operators show `Succeeded` status before proceeding.
 After operators are ready, reapply the configuration to create custom resources:
 
 ```bash
-kubectl apply -f observability.yaml 
+oc apply -f observability.yaml 
 ```
 
 ### Step 4: Verify Core Stack
@@ -62,7 +62,7 @@ kubectl apply -f observability.yaml
 Check that all pods are running in the observability-hub namespace:
 
 ```bash
-kubectl get pods -n observability-hub
+oc get pods -n observability-hub
 ```
 
 Expected pods:
@@ -77,10 +77,10 @@ Deploy the specialized dashboards for GPU and vLLM monitoring:
 
 ```bash
 # Deploy NVIDIA GPU monitoring dashboard
-kubectl apply -f nvidia-dashboard.yaml -n observability-hub
+oc apply -f nvidia-dashboard.yaml -n observability-hub
 
 # Deploy vLLM performance dashboard
-kubectl apply -f vllm-dashboard.yaml -n observability-hub
+oc apply -f vllm-dashboard.yaml -n observability-hub
 ```
 
 ### Step 6: Access Grafana
@@ -88,7 +88,7 @@ kubectl apply -f vllm-dashboard.yaml -n observability-hub
 Get the Grafana route URL:
 
 ```bash
-kubectl get route grafana-route -n observability-hub -o jsonpath='{.spec.host}'
+oc get route grafana-route -n observability-hub -o jsonpath='{.spec.host}'
 ```
 
 Default credentials:
@@ -139,11 +139,11 @@ curl -X 'POST' \
 
 1. **OpenTelemetryCollector pods failing**
    - Ensure operators are fully installed before reapplying configuration
-   - Check operator logs: `kubectl logs -n openshift-opentelemetry-operator deployment/opentelemetry-product-operator`
+   - Check operator logs: `oc logs -n openshift-opentelemetry-operator deployment/opentelemetry-product-operator`
 
 2. **Missing GPU metrics**
-   - Verify NVIDIA GPU Operator is running: `kubectl get pods -n nvidia-gpu-operator`
-   - Check DCGM exporter: `kubectl get svc nvidia-dcgm-exporter -n nvidia-gpu-operator`
+   - Verify NVIDIA GPU Operator is running: `oc get pods -n nvidia-gpu-operator`
+   - Check DCGM exporter: `oc get svc nvidia-dcgm-exporter -n nvidia-gpu-operator`
 
 3. **Dashboard not showing data**
    - Verify Prometheus is scraping metrics
@@ -154,13 +154,13 @@ curl -X 'POST' \
 
 ```bash
 # Check if Grafana is accessible
-kubectl get route grafana-route -n observability-hub
+oc get route grafana-route -n observability-hub
 
 # Verify metrics collection
-kubectl get servicemonitor -A | grep -E "(nvidia|vllm)"
+oc get servicemonitor -A | grep -E "(nvidia|vllm)"
 
 # Check Prometheus targets (from Grafana or port-forward to Prometheus)
-kubectl port-forward -n openshift-monitoring svc/prometheus-k8s 9090:9090
+oc port-forward -n openshift-monitoring svc/prometheus-k8s 9090:9090
 ```
 
 ## References
