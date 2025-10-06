@@ -1,5 +1,7 @@
 # Observability Stack Deployment Instructions
 
+Use this along with the llm-guardrails repo deployment. 
+
 This guide provides step-by-step instructions for deploying the complete observability stack at Scale, including Grafana dashboards for GPU monitoring and vLLM metrics.
 
 ## Prerequisites
@@ -15,7 +17,7 @@ This guide provides step-by-step instructions for deploying the complete observa
 Deploy the main observability infrastructure including Grafana, Prometheus, Tempo, and OpenTelemetry collectors:
 
 ```bash
-kubectl apply -f manifests/observability/observability.yaml
+kubectl apply -f observability.yaml
 ```
 
 **Expected behavior:**
@@ -44,7 +46,7 @@ Wait until all operators show `Succeeded` status before proceeding.
 After operators are ready, reapply the configuration to create custom resources:
 
 ```bash
-kubectl apply -f manifests/observability/observability.yaml
+kubectl apply -f observability.yaml
 ```
 
 ### Step 4: Verify Core Stack
@@ -67,10 +69,10 @@ Deploy the specialized dashboards for GPU and vLLM monitoring:
 
 ```bash
 # Deploy NVIDIA GPU monitoring dashboard
-kubectl apply -f manifests/observability/nvidia-dashboard.yaml
+kubectl apply -f nvidia-dashboard.yaml
 
 # Deploy vLLM performance dashboard
-kubectl apply -f manifests/observability/vllm-dashboard.yaml
+kubectl apply -f vllm-dashboard.yaml
 ```
 
 ### Step 6: Access Grafana
@@ -89,9 +91,9 @@ Default credentials:
 
 ### Namespace Configuration
 
-The monitoring configuration is currently tuned for the `vllm` namespace. To monitor models in different namespaces:
+The monitoring configuration is currently tuned for the `model-namespace` namespace. To monitor models in different namespaces:
 
-1. Edit `manifests/observability/observability.yaml`
+1. Edit `observability.yaml`
 2. Update the PodMonitor resources (lines 750-790) to include your target namespaces
 3. Reapply the configuration
 
