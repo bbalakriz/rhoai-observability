@@ -1,6 +1,9 @@
 # Sample model deployment
 
 ```bash
+oc new-project model-namespace
+# ensure that llama31-1b-instruct is deployed in this namespace
+
 oc apply -f serving-runtime.yaml
 oc apply -f inference-service.yaml
 ```
