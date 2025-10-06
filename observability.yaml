@@ -752,7 +752,7 @@ metadata:
     app.kubernetes.io/version: 1.0.0
     helm.sh/chart: uwm-0.1.0
   name: vllm-llama-serve-monitor
-  namespace: vllm #This is important, the observability operator needs to be in the same namespace as the vllm namespace
+  namespace: model-namespace #This is important, the observability operator needs to be in the same namespace as the model-namespace namespace
 spec:
   podMetricsEndpoints:
   - interval: 30s
@@ -778,7 +778,7 @@ metadata:
     helm.sh/chart: uwm-0.1.0
     release: prometheus
   name: vllm-metrics
-  namespace: vllm #This is important, the observability operator needs to be in the same namespace as the vllm namespace
+  namespace: model-namespace #This is important, the observability operator needs to be in the same namespace as the model-namespace 
 spec:
   podMetricsEndpoints:
   - interval: 15s
