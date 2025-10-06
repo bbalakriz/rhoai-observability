@@ -1,6 +1,6 @@
 # Observability Stack Deployment Instructions
 
-This guide provides step-by-step instructions for deploying the complete observability stack for ETX Serving at Scale, including Grafana dashboards for GPU monitoring and vLLM metrics.
+This guide provides step-by-step instructions for deploying the complete observability stack at Scale, including Grafana dashboards for GPU monitoring and vLLM metrics.
 
 ## Prerequisites
 
