@@ -840,7 +840,13 @@ spec:
           - otlp
       telemetry:
         metrics:
-          address: 0.0.0.0:8888
+          level: basic
+          readers:
+            - pull:
+                exporter:
+                  prometheus:
+                    host: 0.0.0.0
+                    port: 8888
   daemonSetUpdateStrategy: {}
   deploymentUpdateStrategy: {}
   ingress:
@@ -939,7 +945,13 @@ spec:
           - otlp
       telemetry:
         metrics:
-          address: 0.0.0.0:8888
+          level: basic
+          readers:
+            - pull:
+                exporter:
+                  prometheus:
+                    host: 0.0.0.0
+                    port: 8888
   ingress:
     route:
       termination: passthrough
@@ -1006,7 +1018,13 @@ spec:
           - otlp
       telemetry:
         metrics:
-          address: 0.0.0.0:8888
+          level: basic
+          readers:
+            - pull:
+                exporter:
+                  prometheus:
+                    host: 0.0.0.0
+                    port: 8888
   daemonSetUpdateStrategy: {}
   deploymentUpdateStrategy: {}
   ingress:
